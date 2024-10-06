@@ -3,6 +3,8 @@
 filesdir="$1"
 searchstr="$2"
 
+echo "$searchstr in $filesdir"
+
 if [[ -z $filesdir || -z $searchstr ]]; then
     echo "Missing argument. 2 arguments are required."
     exit 1
@@ -13,7 +15,7 @@ if [[ ! -d $filesdir ]]; then
     exit 1
 fi
 
-nb_files=$(find . -type f | wc -l)
-matching_files=$(grep -rh "$searchstr" . | wc -l)
+nb_files=$(find "$filesdir" -type f | wc -l)
+matching_files=$(grep -rh "$searchstr" "$filesdir" | wc -l)
 
-echo "The number of files are $nb_files and the number of matching lines are $matching_files."
+echo "finder.sh: The number of files are $nb_files and the number of matching lines are $matching_files."

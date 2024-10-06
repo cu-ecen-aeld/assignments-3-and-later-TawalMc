@@ -13,11 +13,13 @@ username=$(cat conf/username.txt)
 if [ $# -lt 3 ]
 then
 	echo "Using default value ${WRITESTR} for string to write"
+	# echo "Using default value ${WRITEDIR} for sub-folder"
 	if [ $# -lt 1 ]
 	then
 		echo "Using default value ${NUMFILES} for number of files to write"
 	else
 		NUMFILES=$1
+		# WRITESTR=$2
 	fi	
 else
 	NUMFILES=$1
