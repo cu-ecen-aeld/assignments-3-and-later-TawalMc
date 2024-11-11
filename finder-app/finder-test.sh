@@ -52,10 +52,10 @@ then
 fi
 
 # Clean any previous build artifacts.
-make clean 
+# make clean 
 
 # Compile your writer application using native compilation
-make
+# make
 
 for i in $( seq 1 $NUMFILES)
 do
