@@ -7,7 +7,7 @@
  *   either in invocation of the system() call, or if a non-zero return
  *   value was returned by the command issued in @param cmd.
 */
-bool do_system(const char *cmd) 
+bool do_system(const char *cmd)
 {
 
 /*
@@ -16,7 +16,11 @@ bool do_system(const char *cmd)
  *   and return a boolean true if the system() call completed with success
  *   or false() if it returned a failure
 */
-
+    int ret = system(cmd);
+    if (ret == -1)
+    {
+        return false;
+    }
     return true;
 }
 
