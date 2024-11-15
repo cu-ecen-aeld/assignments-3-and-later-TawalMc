@@ -87,7 +87,7 @@ bool do_exec(int count, ...)
     {
         return false;
     }
-    
+
     va_end(args);
 
     return true;
@@ -104,6 +104,7 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
     va_list args;
     va_start(args, count);
     char *command[count + 1];
+    char *cmd_args[count];
     int i;
     for (i = 0; i < count; i++)
     {
@@ -114,6 +115,12 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
     // and may be removed
     command[count] = command[count];
 
+    int j = 0;
+    for (j = 1; j < count + 1; j++)
+    {
+        cmd_args[j - 1] = command[j];
+    }
+
     /*
      * TODO
      *   Call execv, but first using https://stackoverflow.com/a/13784315/1446624 as a refernce,
@@ -121,6 +128,38 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
      *   The rest of the behaviour is same as do_exec()
      *
      */
+
+    pid_t pid = fork();
+    int fd = open(outputfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+
+    if (fd < 0)
+    {
+        return false;
+    }
+
+    if (pid == -1)
+    {
+        close(fd);
+        return false;
+    }
+
+    if (pid > 0)
+    {
+        int status;
+        wait(&status);
+    }
+    // printf("1111\n");
+    if (dup2(fd, 1) < 0)
+    {
+        return false;
+    }
+    close(fd);
+
+    int ret_exec = execv(command[0], cmd_args);
+    if (ret_exec == -1)
+    {
+        return false;
+    }
 
     va_end(args);
 
