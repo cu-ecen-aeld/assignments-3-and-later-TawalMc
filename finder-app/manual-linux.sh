@@ -7,7 +7,8 @@ set -u
 
 OUTDIR=/tmp/aeld
 # KERNEL_REPO=git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git 
-KERNEL_REPO=https://github.com/TawalMc/linux-stable.git
+# KERNEL_REPO=https://github.com/TawalMc/linux-stable.git
+KERNEL_REPO=https://github.com/TawalMc/linux-stable/archive/coursera.tar.gz
 # KERNEL_VERSION=v5.15.163
 KERNEL_VERSION=coursera
 BUSYBOX_VERSION=1_33_1
@@ -30,7 +31,11 @@ cd "$OUTDIR"
 if [ ! -d "${OUTDIR}/linux-stable" ]; then
     #Clone only if the repository does not exist.
 	echo "CLONING GIT LINUX STABLE VERSION ${KERNEL_VERSION} IN ${OUTDIR}"
-	git clone ${KERNEL_REPO} --depth 1 --single-branch --branch ${KERNEL_VERSION}
+	#git clone ${KERNEL_REPO} --depth 1 --single-branch --branch ${KERNEL_VERSION}
+    
+    wget ${KERNEL_REPO}
+    tar -xf coursera.tar.gz
+    mv linux-stable-coursera linux-stable
 fi
 if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     cd linux-stable
