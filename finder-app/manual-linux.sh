@@ -33,7 +33,7 @@ if [ ! -d "${OUTDIR}/linux-stable" ]; then
 	echo "CLONING GIT LINUX STABLE VERSION ${KERNEL_VERSION} IN ${OUTDIR}"
 	#git clone ${KERNEL_REPO} --depth 1 --single-branch --branch ${KERNEL_VERSION}
     
-    wget ${KERNEL_REPO}
+    wget -q ${KERNEL_REPO}
     tar -xf coursera.tar.gz
     mv linux-stable-coursera linux-stable
 fi
