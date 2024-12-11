@@ -7,7 +7,7 @@ set -u
 
 OUTDIR=/tmp/aeld
 # KERNEL_REPO=git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git 
-KERNEL_REPO=git@github.com:TawalMc/linux-stable.git
+KERNEL_REPO=https://github.com/TawalMc/linux-stable.git
 # KERNEL_VERSION=v5.15.163
 KERNEL_VERSION=coursera
 BUSYBOX_VERSION=1_33_1
