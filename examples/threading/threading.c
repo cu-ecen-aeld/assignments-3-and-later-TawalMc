@@ -77,5 +77,5 @@ bool start_thread_obtaining_mutex(pthread_t *thread, pthread_mutex_t *mutex, int
         thread_data_used->thread_complete_success = true;
     }
 
-    return thread_data_used->thread_complete_success;
+    return thread_data_used->thread_complete_success ;
 }
