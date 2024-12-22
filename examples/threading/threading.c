@@ -5,8 +5,8 @@
 
 // Optional: use these functions to add debug or error prints to your application
 // #define DEBUG_LOG(msg,...)
-#define DEBUG_LOG(msg, ...) printf("threading: " msg "\n", ##__VA_ARGS__)
-#define ERROR_LOG(msg, ...) printf("threading ERROR: " msg "\n", ##__VA_ARGS__)
+// #define DEBUG_LOG(msg, ...) printf("threading: " msg "\n", ##__VA_ARGS__)
+// #define ERROR_LOG(msg, ...) printf("threading ERROR: " msg "\n", ##__VA_ARGS__)
 
 void *threadfunc(void *thread_param)
 {
@@ -15,7 +15,7 @@ void *threadfunc(void *thread_param)
     // struct thread_data* thread_func_args = (struct thread_data *) thread_param;
     struct thread_data *thread_func_args = (struct thread_data *)thread_param;
 
-    usleep(thread_func_args->wait_to_obtain_ms);
+    usleep(1000 * thread_func_args->wait_to_obtain_ms);
 
     int rc = pthread_mutex_lock(thread_func_args->mutex);
     if (rc != 0)
@@ -26,7 +26,7 @@ void *threadfunc(void *thread_param)
     {
         printf("succedded - pthread_mutex_lock\n");
 
-        usleep(thread_func_args->wait_to_release_ms);
+        usleep(1000 * thread_func_args->wait_to_release_ms);
 
         rc = pthread_mutex_unlock(thread_func_args->mutex);
         if (rc != 0)
@@ -68,11 +68,9 @@ bool start_thread_obtaining_mutex(pthread_t *thread, pthread_mutex_t *mutex, int
         free(thread_data_used);
         return false;
     }
-    else
-    {
-        printf("thread created %d\n", thread_data_used->thread_complete_success);
-        thread_data_used->thread_complete_success = true;
-    }
+
+    printf("thread created %d\n", thread_data_used->thread_complete_success);
+    thread_data_used->thread_complete_success = true;
 
     return true;
 }
